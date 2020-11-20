@@ -9,17 +9,49 @@
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\Contact.cshtml" />
+    <Content Remove="Views\Profile\Eating.cshtml" />
+    <Content Remove="Views\Profile\Home.cshtml" />
+    <Content Remove="Views\Profile\Trainer.cshtml" />
+    <Content Remove="Views\Profile\Training.cshtml" />
+    <Content Remove="Views\Silvergym\about.cshtml" />
+    <Content Remove="Views\Silvergym\blog.cshtml" />
+    <Content Remove="Views\Silvergym\contact.cshtml" />
+    <Content Remove="Views\Silvergym\gallery.cshtml" />
+    <Content Remove="Views\Silvergym\Home.cshtml" />
+    <Content Remove="Views\Silvergym\pricing.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\Gym\Trainers.cshtml" />
+    <None Include="Views\Profile\Trainer.cshtml" />
+    <None Include="Views\Profile\Eating.cshtml" />
+    <None Include="Views\Profile\Training.cshtml" />
+    <None Include="Views\Profile\Home.cshtml" />
+    <None Include="Views\Silvergym\blog.cshtml" />
+    <None Include="Views\Gym\Gallery.cshtml" />
+    <None Include="Views\Home\Home.cshtml" />
+    <None Include="Views\Silvergym\pricing.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
