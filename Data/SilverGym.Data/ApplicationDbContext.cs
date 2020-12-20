@@ -26,6 +26,21 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Meal> Meals { get; set; }
+
+        public DbSet<MealPlan> MealPlan { get; set; }
+
+        public DbSet<MealPlans> MealPlans { get; set; }
+
+        public DbSet<EatingPlan> EatingPlan { get; set; }
+
+        public DbSet<Exercise> Exercises { get; set; }
+
+        public DbSet<WorkoutDay> WorkoutDays { get; set; }
+
+        public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -72,6 +87,8 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            builder.Entity<MealPlans>().HasKey(x => new { x.MealId, x.MealPlanId});
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
