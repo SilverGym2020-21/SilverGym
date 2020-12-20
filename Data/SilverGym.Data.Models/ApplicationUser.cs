@@ -1,12 +1,11 @@
-﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace SilverGym.Data.Models
+﻿namespace SilverGym.Data.Models
 {
     using System;
     using System.Collections.Generic;
 
-    using SilverGym.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+
+    using SilverGym.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +15,8 @@ namespace SilverGym.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.EatingPlans = new HashSet<EatingPlan>();
+            this.WorkoutPlans = new HashSet<WorkoutPlan>();
         }
 
         // Audit info
@@ -33,5 +34,9 @@ namespace SilverGym.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<WorkoutPlan> WorkoutPlans { get; set; }
+
+        public virtual ICollection<EatingPlan> EatingPlans { get; set; }
     }
 }

@@ -54,6 +54,10 @@
                                             <button type="submit" class="btn gym-btn">Logout</button>
                                         </form>
                                     </li>
+                                    @if (this.User.IsInRole("Administrator"))
+                                    {
+                                        <li><a asp-controller="Administration" asp-action="Dashboard">Админ панел</a></li>
+                                    }
                                 }
                             </ul>
                         </div>
