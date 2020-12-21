@@ -1,0 +1,14 @@
+﻿@using SilverGym.Web.ViewModels.Trainer
+
+@model ICollection<RemoveClientFromTrainerInputModel>
+
+@foreach (RemoveClientFromTrainerInputModel client in Model)
+{
+    <div>
+        <p>@client.ClientEmail</p>
+        @await Html.PartialAsync("_RemoveClient", client) 
+        
+    </div>
+}
+
+

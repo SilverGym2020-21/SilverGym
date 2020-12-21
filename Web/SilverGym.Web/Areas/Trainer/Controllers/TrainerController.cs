@@ -11,6 +11,7 @@
     using SilverGym.Common;
     using SilverGym.Services.Data.Contracts;
     using SilverGym.Web.ViewModels;
+    using SilverGym.Web.ViewModels.Trainer;
 
     [Authorize(Roles = GlobalConstants.TrainerRoleName)]
     [Area("Trainer")]
@@ -47,6 +48,38 @@
             catch (Exception e)
             {
                  this.ModelState.AddModelError("client", e.Message);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = new AddClientToTrainerInputModel()
+                {
+                    TrainerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                };
+                return this.View(viewModel);
+            }
+
+            return this.Redirect("/Trainer/Trainer/ControlPanel");
+        }
+
+        public async Task<IActionResult> Clients()
+        {
+            var trainerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var viewModel = await this.trainersService.GetClients(trainerId);
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveClient(RemoveClientFromTrainerInputModel input)
+        {
+            try
+            {
+                await this.trainersService.RemoveClient(input);
+            }
+            catch (Exception e)
+            {
+                this.ModelState.AddModelError("client", e.Message);
             }
 
             if (!this.ModelState.IsValid)

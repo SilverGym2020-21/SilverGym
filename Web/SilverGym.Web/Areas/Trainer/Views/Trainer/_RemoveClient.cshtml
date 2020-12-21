@@ -1,0 +1,15 @@
+﻿@using SilverGym.Web.ViewModels.Trainer
+
+@model RemoveClientFromTrainerInputModel
+
+<form class="mx-auto half-width col-5" enctype="multipart/form-data" method="post" asp-area="Trainer" asp-controller="Trainer" asp-action="RemoveClient">
+    <input asp-for="ClientEmail" class="form-control hidden" value="@Model.ClientEmail">
+    <input asp-for="ClientId" class="form-control hidden" value="@Model.ClientId">
+    <input asp-for="TrainerId" class="form-control hidden" value="@Model.TrainerId">
+
+    @await Html.PartialAsync("_ModelErrors")
+
+    <div class="top-border-line primary-separator"></div>
+
+    <button type="submit" class="btn forum-add-bg-color">Remove Client</button>
+</form>

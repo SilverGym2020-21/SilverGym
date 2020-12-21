@@ -4,9 +4,15 @@
     using System.Threading.Tasks;
 
     using SilverGym.Web.ViewModels;
+    using SilverGym.Web.ViewModels.Trainer;
 
     public interface ITrainersService
     {
         public Task AddClient(AddClientToTrainerInputModel client);
+
+        public Task RemoveClient(RemoveClientFromTrainerInputModel input);
+
+        public Task<ICollection<RemoveClientFromTrainerInputModel>> GetClients(string trainerId);
+
     }
 }
