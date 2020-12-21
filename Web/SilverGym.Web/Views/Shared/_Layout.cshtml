@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/gym.css" rel="stylesheet" asp-append-version="true" />
 </head>
@@ -39,30 +39,26 @@
                                 }
                                 else
                                 {
-<<<<<<< Updated upstream
                                     <li><a asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
-                                    <li><a asp-controller="Gym" asp-action="Trainers">Трениори</a></li>
-                                    <li><a asp-controller="Home" asp-action="Contact">Контакти</a></li>
-=======
-                                    <li><a asp-controller="Gym" asp-action="Gallery">Gallery</a></li>
                                     @if (this.User.IsInRole("Trainer"))
                                     {
-                                        <li><a asp-controller="Gym" asp-action="Clients">Clients</a></li>
+                                        <li><a asp-controller="Gym" asp-action="Clients">Клиенти</a></li>
+                                        <li><a asp-area="Trainer" asp-controller="Trainer" asp-action="ControlPanel">Треньорски панел</a></li>
                                     }
                                     else
                                     {
-                                        <li><a asp-controller="Gym" asp-action="Trainers">Trainers</a></li>
+                                        <li><a asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
+                                        <li class="has-dropdown">
+                                            <a asp-controller="Profile" asp-action="Home">Профил</a>
+                                            <ul class="dropdown">
+                                                <li><a asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
+                                                <li><a asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
+                                                <li><a asp-controller="Profile" asp-action="Trainer">Мойте трениори</a></li>
+                                            </ul>
+                                        </li>
                                     }
-                                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
->>>>>>> Stashed changes
-                                    <li class="has-dropdown">
-                                        <a asp-controller="Profile" asp-action="Home">Профил</a>
-                                        <ul class="dropdown">
-                                            <li><a asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
-                                            <li><a asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
-                                            <li><a asp-controller="Profile" asp-action="Trainer">Мойте трениори</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a asp-controller="Home" asp-action="Contact">Контакти</a></li>
+
                                     <li>
                                         <form class="form-inline" style="display: inline;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                                             <button type="submit" class="btn gym-btn">Излез</button>
@@ -70,7 +66,7 @@
                                     </li>
                                     @if (this.User.IsInRole("Administrator"))
                                     {
-                                        <li><a asp-controller="Administration" asp-action="AdminPanel">Админ панел</a></li>
+                                        <li><a asp-area="Administration" asp-controller="Administration" asp-action="AdminPanel">Админ панел</a></li>
                                     }
                                 }
                             </ul>

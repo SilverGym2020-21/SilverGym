@@ -1,5 +1,7 @@
 ﻿namespace SilverGym.Services.Data
 {
+    using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,17 @@
         public async Task AddTrainer(TrainerInputModel input)
         {
             var user = await this.db.Users.FirstOrDefaultAsync(c => c.Email == input.Email);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Няма регистриран човек с този е-мейл.");
+            }
+
+            var asTrainer = user as Trainer;
+            if (asTrainer != null)
+            {
+                throw new ArgumentException("Този човек вече е треньор.");
+            }
 
             this.db.Users.Remove(user);
 
@@ -59,39 +72,56 @@
         {
             var trainer = await this.db.Users.FirstOrDefaultAsync(u => u.Email == input.Email);
 
-            if (trainer != null)
+            if (trainer == null)
             {
-                var userRole = await this.db.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == trainer.Id);
-
-                if (userRole != null)
-                {
-                    this.db.UserRoles.Remove(userRole);
-                    await this.db.SaveChangesAsync();
-                }
-
-                var user = new ApplicationUser()
-                {
-                    UserName = trainer.UserName,
-                    Roles = trainer.Roles,
-                    Claims = trainer.Claims,
-                    TwoFactorEnabled = trainer.TwoFactorEnabled,
-                    PhoneNumber = trainer.PhoneNumber,
-                    ConcurrencyStamp = trainer.ConcurrencyStamp,
-                    NormalizedEmail = trainer.NormalizedEmail,
-                    Email = trainer.Email,
-                    NormalizedUserName = trainer.NormalizedUserName,
-                    EmailConfirmed = trainer.EmailConfirmed,
-                    SecurityStamp = trainer.SecurityStamp,
-                    PasswordHash = trainer.PasswordHash,
-                    PhoneNumberConfirmed = trainer.PhoneNumberConfirmed,
-                    Logins = trainer.Logins,
-                };
-
-                this.db.Users.Remove(trainer);
-
-                await this.db.Users.AddAsync(user);
-                await this.db.SaveChangesAsync();
+                throw new ArgumentException("Няма регистриран човек с този е-мейл.");
             }
+
+            var asTrainer = trainer as Trainer;
+            if (asTrainer == null)
+            {
+                throw new ArgumentException("Този човек не е треньор.");
+            }
+
+            var userRole = await this.db.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == trainer.Id);
+
+            if (userRole == null)
+            {
+                throw new ArgumentException("Този човек не притежава роля треньор.");
+            }
+
+            var usersWhosTrainer = this.db.Users.Where(u => u.TrainerId == asTrainer.Id).ToList();
+            foreach (var client in usersWhosTrainer)
+            {
+                client.Trainer = null;
+                client.TrainerId = null;
+            }
+
+            this.db.UserRoles.Remove(userRole);
+            await this.db.SaveChangesAsync();
+
+            var user = new ApplicationUser()
+            {
+                UserName = trainer.UserName,
+                Roles = trainer.Roles,
+                Claims = trainer.Claims,
+                TwoFactorEnabled = trainer.TwoFactorEnabled,
+                PhoneNumber = trainer.PhoneNumber,
+                ConcurrencyStamp = trainer.ConcurrencyStamp,
+                NormalizedEmail = trainer.NormalizedEmail,
+                Email = trainer.Email,
+                NormalizedUserName = trainer.NormalizedUserName,
+                EmailConfirmed = trainer.EmailConfirmed,
+                SecurityStamp = trainer.SecurityStamp,
+                PasswordHash = trainer.PasswordHash,
+                PhoneNumberConfirmed = trainer.PhoneNumberConfirmed,
+                Logins = trainer.Logins,
+            };
+
+            this.db.Users.Remove(trainer);
+
+            await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
         }
     }
 }

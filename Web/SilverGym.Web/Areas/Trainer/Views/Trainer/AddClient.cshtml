@@ -1,0 +1,27 @@
+﻿@using SilverGym.Web.ViewModels;
+
+@model AddClientToTrainerInputModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="text-align: center; color: lightgray">Add client</h1>
+        <form class="mx-auto half-width col-5" enctype="multipart/form-data" method="post" asp-controller="Trainer" asp-action="AddClient">
+            <div class="top-border-line primary-separator"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="suls-text-color">Users email to add as client</label>
+                <input asp-for="Email" class="form-control" placeholder="Email...">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <input asp-for="TrainerId" class="form-control hidden" value="@Model?.TrainerId">
+            <span asp-validation-for="TrainerId" class="hidden text-danger"></span>
+
+            @await Html.PartialAsync("_ModelErrors")
+
+            <div class="top-border-line primary-separator"></div>
+
+            <button type="submit" class="btn forum-add-bg-color">Add Client</button>
+        </form>
+    </div>
+</div>

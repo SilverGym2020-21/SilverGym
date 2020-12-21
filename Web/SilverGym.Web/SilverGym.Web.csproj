@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Trainer\Views\Administration\**" />
+    <Content Remove="Areas\Trainer\Views\Administration\**" />
+    <EmbeddedResource Remove="Areas\Trainer\Views\Administration\**" />
+    <None Remove="Areas\Trainer\Views\Administration\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Home\Contact.cshtml" />
     <Content Remove="Views\Profile\Eating.cshtml" />
     <Content Remove="Views\Profile\Home.cshtml" />
@@ -67,9 +74,5 @@
     <ProjectReference Include="..\..\Services\SilverGym.Services\SilverGym.Services.csproj" />
     <ProjectReference Include="..\SilverGym.Web.Infrastructure\SilverGym.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SilverGym.Web.ViewModels\SilverGym.Web.ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Administration\Views\Administration\" />
   </ItemGroup>
 </Project>
