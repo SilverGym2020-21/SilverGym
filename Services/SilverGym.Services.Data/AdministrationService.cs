@@ -1,6 +1,7 @@
 ﻿namespace SilverGym.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
@@ -35,6 +36,13 @@
                 throw new ArgumentException("Този човек вече е треньор.");
             }
 
+            var newRoles = new List<IdentityUserRole<string>>();
+            var userRoles = await this.db.UserRoles.Where(ur => ur.UserId == user.Id).ToListAsync();
+
+            newRoles.AddRange(userRoles);
+
+            this.db.UserRoles.RemoveRange(userRoles);
+            await this.db.SaveChangesAsync();
             this.db.Users.Remove(user);
 
             var trainer = new Trainer()
@@ -60,11 +68,14 @@
             await this.db.Trainers.AddAsync(trainer);
             await this.db.SaveChangesAsync();
 
-            await this.db.UserRoles.AddAsync(new IdentityUserRole<string>()
+            newRoles.ForEach(r => r.UserId = trainer.Id);
+            newRoles.Add(new IdentityUserRole<string>()
             {
                 UserId = trainer.Id,
                 RoleId = trainerRoleId,
             });
+
+            await this.db.UserRoles.AddRangeAsync(newRoles);
             await this.db.SaveChangesAsync();
         }
 
@@ -83,12 +94,12 @@
                 throw new ArgumentException("Този човек не е треньор.");
             }
 
-            var userRole = await this.db.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == trainer.Id);
+            var oldRoles = new List<IdentityUserRole<string>>();
+            var userRoles = await this.db.UserRoles.Where(ur => ur.UserId == trainer.Id).ToListAsync();
 
-            if (userRole == null)
-            {
-                throw new ArgumentException("Този човек не притежава роля треньор.");
-            }
+            var trainerRoleId = (await this.db.Roles.FirstOrDefaultAsync(r => r.Name == GlobalConstants.TrainerRoleName)).Id;
+
+            oldRoles.AddRange(userRoles.Where(ur => ur.RoleId != trainerRoleId).ToList());
 
             var usersWhosTrainer = this.db.Users.Where(u => u.TrainerId == asTrainer.Id).ToList();
             foreach (var client in usersWhosTrainer)
@@ -97,7 +108,7 @@
                 client.TrainerId = null;
             }
 
-            this.db.UserRoles.Remove(userRole);
+            this.db.UserRoles.RemoveRange(userRoles);
             await this.db.SaveChangesAsync();
 
             var user = new ApplicationUser()
@@ -121,6 +132,11 @@
             this.db.Users.Remove(trainer);
 
             await this.db.Users.AddAsync(user);
+            await this.db.SaveChangesAsync();
+
+            oldRoles.ForEach(r => r.UserId = user.Id);
+
+            await this.db.UserRoles.AddRangeAsync(oldRoles);
             await this.db.SaveChangesAsync();
         }
     }
