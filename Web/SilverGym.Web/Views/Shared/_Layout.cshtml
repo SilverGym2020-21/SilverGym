@@ -7,6 +7,7 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/gym.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -30,28 +31,28 @@
                         </div>
                         <div class="col-xs-10 text-right menu-1">
                             <ul>
-                                <li class="active"><a href="/">Home</a></li>
+                                <li class="active"><a href="/">Начало</a></li>
                                 @if (this.User.Identity.IsAuthenticated == false)
                                 {
-                                    <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-                                    <li><a asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Login">Влез</a></li>
+                                    <li><a asp-area="Identity" asp-page="/Account/Register">Регистрирай се</a></li>
                                 }
                                 else
                                 {
-                                    <li><a asp-controller="Gym" asp-action="Gallery">Gallery</a></li>
-                                    <li><a asp-controller="Gym" asp-action="Trainers">Trainers</a></li>
-                                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                                    <li><a asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
+                                    <li><a asp-controller="Gym" asp-action="Trainers">Трениори</a></li>
+                                    <li><a asp-controller="Home" asp-action="Contact">Контакти</a></li>
                                     <li class="has-dropdown">
-                                        <a asp-controller="Profile" asp-action="Home">Profile</a>
+                                        <a asp-controller="Profile" asp-action="Home">Профил</a>
                                         <ul class="dropdown">
-                                            <li><a asp-controller="Profile" asp-action="Training">Training program</a></li>
-                                            <li><a asp-controller="Profile" asp-action="Eating">Eating program</a></li>
-                                            <li><a asp-controller="Profile" asp-action="Trainer">My Trainer</a></li>
+                                            <li><a asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
+                                            <li><a asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
+                                            <li><a asp-controller="Profile" asp-action="Trainer">Мойте трениори</a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <form class="form-inline" style="display: inline;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                                            <button type="submit" class="btn gym-btn">Logout</button>
+                                            <button type="submit" class="btn gym-btn">Излез</button>
                                         </form>
                                     </li>
                                     @if (this.User.IsInRole("Administrator"))
@@ -81,9 +82,9 @@
         <div class="container">
             <div class="row row-pb-md">
                 <div class="col-md-4 fh5co-widget">
-                    <h3>A Little About SilverGym.</h3>
+                    <h3>Искаш да станеш част от нас</h3>
                     <p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-                    <p><a class="btn btn-primary" href="#">Become A Member</a></p>
+                    <p><a class="btn btn-primary" href="#">Стани член на SilverGym  </a></p>
                 </div>
                 <div class="col-md-8">
                     <h3>Classes</h3>
