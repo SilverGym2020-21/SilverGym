@@ -1,0 +1,22 @@
+﻿@using SilverGym.Web.ViewModels.Administration;
+
+@model TrainerInputModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="text-align: center; color: lightgray">Add a new trainer</h1>
+        <form class="mx-auto half-width col-5" enctype="multipart/form-data" method="post" asp-action="RemoveTrainer">
+            <div class="top-border-line primary-separator"></div>
+
+            <div class="form-group">
+                <label asp-for="Email" class="suls-text-color">Users email to remove as trainer</label>
+                <input asp-for="Email" class="form-control" placeholder="Email...">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="top-border-line primary-separator"></div>
+
+            <button type="submit" class="btn forum-add-bg-color">Add Trainer</button>
+        </form>
+    </div>
+</div>

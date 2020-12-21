@@ -4,20 +4,20 @@
     using SilverGym.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
+    using SilverGym.Web.ViewModels.Administration;
+    using SilverGym.Services.Data.Contracts;
+    using System.Threading.Tasks;
 
     public class DashboardController : AdministrationController
     {
         private readonly ISettingsService settingsService;
+        private readonly IAdministrationService administrationService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController(ISettingsService settingsService, IAdministrationService administrationService)
         {
             this.settingsService = settingsService;
+            this.administrationService = administrationService;
         }
 
-        public IActionResult Index()
-        {
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\SilverGym.Data.Common\SilverGym.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\SilverGym.Data.Models\SilverGym.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\SilverGym.Data\SilverGym.Data.csproj" />
+    <ProjectReference Include="..\..\Web\SilverGym.Web.ViewModels\SilverGym.Web.ViewModels.csproj" />
     <ProjectReference Include="..\SilverGym.Services.Mapping\SilverGym.Services.Mapping.csproj" />
   </ItemGroup>
 

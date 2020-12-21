@@ -39,9 +39,22 @@
                                 }
                                 else
                                 {
+<<<<<<< Updated upstream
                                     <li><a asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
                                     <li><a asp-controller="Gym" asp-action="Trainers">Трениори</a></li>
                                     <li><a asp-controller="Home" asp-action="Contact">Контакти</a></li>
+=======
+                                    <li><a asp-controller="Gym" asp-action="Gallery">Gallery</a></li>
+                                    @if (this.User.IsInRole("Trainer"))
+                                    {
+                                        <li><a asp-controller="Gym" asp-action="Clients">Clients</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li><a asp-controller="Gym" asp-action="Trainers">Trainers</a></li>
+                                    }
+                                    <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+>>>>>>> Stashed changes
                                     <li class="has-dropdown">
                                         <a asp-controller="Profile" asp-action="Home">Профил</a>
                                         <ul class="dropdown">
@@ -57,7 +70,7 @@
                                     </li>
                                     @if (this.User.IsInRole("Administrator"))
                                     {
-                                        <li><a asp-controller="Administration" asp-action="Dashboard">Админ панел</a></li>
+                                        <li><a asp-controller="Administration" asp-action="AdminPanel">Админ панел</a></li>
                                     }
                                 }
                             </ul>
