@@ -29,6 +29,10 @@
 
         public DateTime? DeletedOn { get; set; }
 
+        public virtual Trainer Trainer { get; set; }
+
+        public string TrainerId { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
