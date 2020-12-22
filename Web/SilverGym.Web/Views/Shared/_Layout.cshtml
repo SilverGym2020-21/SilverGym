@@ -40,20 +40,19 @@
                                 else
                                 {
                                     <li><a asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
+                                    <li><a asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
                                     @if (this.User.IsInRole("Trainer"))
                                     {
-                                        <li><a asp-controller="Gym" asp-action="Clients">Клиенти</a></li>
                                         <li><a asp-area="Trainer" asp-controller="Trainer" asp-action="ControlPanel">Треньорски панел</a></li>
                                     }
                                     else
                                     {
-                                        <li><a asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
                                         <li class="has-dropdown">
                                             <a asp-controller="Profile" asp-action="Home">Профил</a>
                                             <ul class="dropdown">
                                                 <li><a asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
                                                 <li><a asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
-                                                <li><a asp-controller="Profile" asp-action="Trainer">Мойте трениори</a></li>
+                                                <li><a asp-controller="Profile" asp-action="Trainer">Моят треньор</a></li>
                                             </ul>
                                         </li>
                                     }

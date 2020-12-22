@@ -1,9 +1,19 @@
 ﻿namespace SilverGym.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SilverGym.Services.Data.Contracts;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
 
     public class ProfileController : BaseController
     {
+        private readonly IProfileService profileService;
+
+        public ProfileController(IProfileService profileService)
+        {
+            this.profileService = profileService;
+        }
+
         public IActionResult Home()
         {
             return this.View();
@@ -19,9 +29,11 @@
             return this.View();
         }
 
-        public IActionResult Trainer()
+        public async Task<IActionResult> Trainer()
         {
-            return this.View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = await this.profileService.GetTrainer(userId);
+            return this.View(viewModel);
         }
     }
 }
