@@ -39,8 +39,8 @@
                                 }
                                 else
                                 {
-                                    <li><a asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
-                                    <li><a asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
+                                    <li><a asp-area="" asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
+                                    <li><a asp-area="" asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
                                     @if (this.User.IsInRole("Trainer"))
                                     {
                                         <li><a asp-area="Trainer" asp-controller="Trainer" asp-action="ControlPanel">Треньорски панел</a></li>
@@ -48,15 +48,15 @@
                                     else
                                     {
                                         <li class="has-dropdown">
-                                            <a asp-controller="Profile" asp-action="Home">Профил</a>
+                                            <a asp-area="" asp-controller="Profile" asp-action="Home">Профил</a>
                                             <ul class="dropdown">
-                                                <li><a asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
-                                                <li><a asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
-                                                <li><a asp-controller="Profile" asp-action="Trainer">Моят треньор</a></li>
+                                                <li><a asp-area="" asp-controller="Profile" asp-action="Training">Тренировачни програми</a></li>
+                                                <li><a asp-area="" asp-controller="Profile" asp-action="Eating">Хранителни режими</a></li>
+                                                <li><a asp-area="" asp-controller="Profile" asp-action="Trainer">Моят треньор</a></li>
                                             </ul>
                                         </li>
                                     }
-                                    <li><a asp-controller="Home" asp-action="Contact">Контакти</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a></li>
 
                                     <li>
                                         <form class="form-inline" style="display: inline;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">

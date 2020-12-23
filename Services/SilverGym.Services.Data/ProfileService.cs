@@ -38,7 +38,9 @@
 
             return new PersonalTrainerViewModel()
             {
+                TrainerId = trainer.Id,
                 TrainerEmail = trainer.Email,
+                Name = trainer.FirstName + " " + trainer.LastName,
             };
         }
     }

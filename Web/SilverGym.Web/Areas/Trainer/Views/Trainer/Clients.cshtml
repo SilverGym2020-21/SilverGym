@@ -7,7 +7,8 @@
     <div>
         <p>@client.ClientEmail</p>
         @await Html.PartialAsync("_RemoveClient", client) 
-        
+        <a asp-area="Trainer" asp-controller="Trainer" asp-action="AddEatingPlan" asp-route-id="@client.ClientId">Добави хранителен режим</a>
+        <a asp-area="Trainer" asp-controller="Trainer" asp-action="AddWorkoutPlan" asp-route-id="@client.ClientId">Добави тренировачна програма</a>
     </div>
 }
 

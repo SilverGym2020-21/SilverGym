@@ -3,11 +3,18 @@
 @model PersonalTrainerViewModel
 
 <div class="fh5co-loader"></div>
-
-<h1>
-	Trainer - @Model.TrainerEmail
-</h1>
-
+	@if (Model.TrainerId == null)
+    {
+        <h1>Нямаш личен треньор!</h1>
+    }
+    else
+    {
+        <h1>Треньор - @Model.Name</h1>
+        
+        <p>
+            Повече информация за твоят треньор -> <a asp-area="" asp-controller="Gym" asp-action="Trainer" asp-route-id="@Model.TrainerId">@Model.Name</a>
+        </p>
+    }
 <div class="gototop js-top">
 	<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 </div>

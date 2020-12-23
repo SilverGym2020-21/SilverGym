@@ -11,7 +11,9 @@
     using SilverGym.Common;
     using SilverGym.Services.Data.Contracts;
     using SilverGym.Web.ViewModels;
+    using SilverGym.Web.ViewModels.EatingPlan;
     using SilverGym.Web.ViewModels.Trainer;
+    using SilverGym.Web.ViewModels.WorkoutPlan;
 
     [Authorize(Roles = GlobalConstants.TrainerRoleName)]
     [Area("Trainer")]
@@ -92,6 +94,30 @@
             }
 
             return this.Redirect("/Trainer/Trainer/ControlPanel");
+        }
+
+        public IActionResult AddEatingPlan(string id)
+        {
+            this.ViewData["ClientId"] = id;
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEatingPlan(EatingPlanInputModel input)
+        {
+            return this.Redirect("/");
+        }
+
+        public IActionResult AddWorkoutPlan(string id)
+        {
+            this.ViewData["ClientId"] = id;
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddWorkoutPlan(WorkoutPlanInputModel input)
+        {
+            return this.Redirect("/");
         }
     }
 }
