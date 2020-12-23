@@ -63,6 +63,32 @@
             }).ToList();
         }
 
+        public async Task<TrainerViewModel> GetTrainer(string id)
+        {
+            var trainer = await this.db.Trainers.FirstOrDefaultAsync(t => t.Id == id);
+            if (trainer == null)
+            {
+                throw new ArgumentException("Този треньор не съществува.");
+            }
+
+            return new TrainerViewModel()
+            {
+                TrainerId = trainer.Id,
+                Name = trainer.FirstName + " " + trainer.LastName,
+                ProfilePictureUrl = trainer.ProfilePictureUrl,
+            };
+        }
+
+        public async Task<ICollection<TrainerViewModel>> GetTrainers()
+        {
+            return await this.db.Trainers.Select(t => new TrainerViewModel()
+            {
+                TrainerId = t.Id,
+                Name = t.FirstName + " " + t.LastName,
+                ProfilePictureUrl = t.ProfilePictureUrl,
+            }).ToListAsync();
+        }
+
         public async Task RemoveClient(RemoveClientFromTrainerInputModel input)
         {
             var client = await this.db.Users.FirstOrDefaultAsync(u => u.Email == input.ClientEmail && u.Id == input.ClientId);

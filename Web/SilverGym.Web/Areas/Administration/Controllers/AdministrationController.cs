@@ -56,7 +56,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveTrainer(TrainerInputModel input)
+        public async Task<IActionResult> RemoveTrainer(TrainerRemoveInputModel input)
         {
             try
             {

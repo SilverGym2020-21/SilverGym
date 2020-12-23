@@ -8,6 +8,6 @@
     {
         public Task AddTrainer(TrainerInputModel input);
 
-        public Task RemoveTrainer(TrainerInputModel input);
+        public Task RemoveTrainer(TrainerRemoveInputModel input);
     }
 }

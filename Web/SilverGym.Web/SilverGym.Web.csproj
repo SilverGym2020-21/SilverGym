@@ -75,4 +75,8 @@
     <ProjectReference Include="..\SilverGym.Web.Infrastructure\SilverGym.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SilverGym.Web.ViewModels\SilverGym.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\trainerImages\" />
+  </ItemGroup>
 </Project>

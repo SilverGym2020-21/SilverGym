@@ -14,5 +14,8 @@
 
         public Task<ICollection<RemoveClientFromTrainerInputModel>> GetClients(string trainerId);
 
+        public Task<ICollection<TrainerViewModel>> GetTrainers();
+
+        public Task<TrainerViewModel> GetTrainer(string id);
     }
 }

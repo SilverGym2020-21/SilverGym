@@ -1,0 +1,51 @@
+﻿@using SilverGym.Web.ViewModels.Trainer
+
+@model TrainerViewModel
+
+@if (ViewData.ModelState.IsValid)
+{
+    <div id="fh5co-trainer">
+        <div class="container">
+            <div class="row animate-box">
+                <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+                    <h2>Фитнес инструктури</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row row-bottom-padded-md">
+                <div class="col-md-12">
+                    <div class="col-md-4 col-sm-4 animate-box">
+                        <div class="trainer">
+                            <img class="img-responsive trainer-image" src="~/trainerImages/@Model.ProfilePictureUrl" alt="trainer">
+                            <div class="title">
+                                <h3>@Model.Name</h3>
+                                <span>Фитнес треньор</span>
+                            </div>
+                            <div class="desc text-center">
+                                <ul class="fh5co-social-icons">
+                                    <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                    <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                    <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                                    <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    @foreach (var modelState in ViewData.ModelState.Values)
+    {
+        foreach (var error in modelState.Errors)
+        {
+            <p class="error-message">@error.ErrorMessage</p>
+        }
+    }
+}
+
