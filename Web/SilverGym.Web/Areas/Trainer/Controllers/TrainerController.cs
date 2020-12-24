@@ -105,6 +105,8 @@
         [HttpPost]
         public async Task<IActionResult> AddEatingPlan(EatingPlanInputModel input)
         {
+            var a = 1;
+
             return this.Redirect("/");
         }
 
