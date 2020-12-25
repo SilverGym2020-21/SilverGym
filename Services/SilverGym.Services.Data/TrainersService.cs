@@ -11,6 +11,7 @@
     using SilverGym.Services.Data.Contracts;
     using SilverGym.Web.ViewModels;
     using SilverGym.Web.ViewModels.Trainer;
+    using SilverGym.Web.ViewModels.WorkoutPlan;
 
     public class TrainersService : ITrainersService
     {
@@ -49,6 +50,53 @@
             client.Trainer = trainer;
             client.TrainerId = trainer.Id;
 
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task AddWorkoutPlantToClient(WorkoutPlanInputModel input)
+        {
+            var client = await this.db.Users.FirstOrDefaultAsync(u => u.Id == input.ClientId);
+
+            if (client == null)
+            {
+                throw new ArgumentException("Невалиден клиент.");
+            }
+
+            var workoutPlan = new WorkoutPlan()
+            {
+                User = client,
+                UserId = client.Id,
+            };
+            var workoutDays = new List<WorkoutDay>();
+
+            foreach (var day in input.WorkoutDays.Where(d => d.Exercises != null).ToList())
+            {
+                var workoutDay = new WorkoutDay()
+                {
+                    WorkDay = day.WorkDay,
+                    WorkoutPlan = workoutPlan,
+                    WorkoutPlanId = workoutPlan.WorkoutPlanId,
+                };
+
+                foreach (var inputExercise in day.Exercises)
+                {
+                    var exercise = new Exercise()
+                    {
+                        MuscleGroup = inputExercise.MuscleGroup,
+                        Name = inputExercise.Name,
+                        RepsOrTime = inputExercise.RepsOrTime,
+                        WorkoutDay = workoutDay,
+                        WorkoutDayId = workoutDay.WorkoutDayId,
+                    };
+                    workoutDay.Exercises.Add(exercise);
+                }
+
+                workoutDays.Add(workoutDay);
+            }
+
+            workoutPlan.WorkoutDays = workoutDays;
+
+            await this.db.WorkoutPlans.AddAsync(workoutPlan);
             await this.db.SaveChangesAsync();
         }
 

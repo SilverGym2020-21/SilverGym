@@ -1,20 +1,94 @@
-﻿@using SilverGym.Web.ViewModels.WorkoutPlan;
+﻿@using SilverGym.Web.ViewModels.WorkoutPlan
+@using SilverGym.Data.Models.Enums;
 
 @model WorkoutPlanInputModel
 
 <div class="row">
     <div class="col-md-12">
-        <h1 style="text-align: center; color: lightgray">Add client</h1>
         <form class="mx-auto half-width col-5" enctype="multipart/form-data" method="post" asp-controller="Trainer" asp-action="AddWorkoutPlan">
             <div class="top-border-line primary-separator"></div>
 
-            <div class="form-group clearfix" id="DaysContainer">
-                <label asp-for="WorkoutDays" class="suls-text-color">Workout Day</label>
-                <a class="btn btn-success" onclick="AddMoreWorkDays()">+</a>
+
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[0].WorkDay" class="suls-text-color">Понеделник</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[0].WorkDay" name="WorkoutDays[0].WorkDay" value="Понеделник" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer0">
+                    <label asp-for="WorkoutDays[0].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(0)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[1].WorkDay" class="suls-text-color">Вторник</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[1].WorkDay" name="WorkoutDays[1].WorkDay" value="Вторник" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer1">
+                    <label asp-for="WorkoutDays[1].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(1)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[2].WorkDay" class="suls-text-color">Сряда</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[2].WorkDay" name="WorkoutDays[2].WorkDay" value="Сряда" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer2">
+                    <label asp-for="WorkoutDays[2].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(2)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[3].WorkDay" class="suls-text-color">Четвъртък</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[3].WorkDay" name="WorkoutDays[3].WorkDay" value="Четвъртък" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer3">
+                    <label asp-for="WorkoutDays[3].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(3)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[4].WorkDay" class="suls-text-color">Петък</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[4].WorkDay" name="WorkoutDays[4].WorkDay" value="Петък" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer4">
+                    <label asp-for="WorkoutDays[4].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(4)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[5].WorkDay" class="suls-text-color">Събота</label>
+                    <input class="WorkDayInputLabel" readonly asp-for="WorkoutDays[5].WorkDay" name="WorkoutDays[5].WorkDay" value="Събота" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer5">
+                    <label asp-for="WorkoutDays[5].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(5)">+</a>
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label asp-for="WorkoutDays[6].WorkDay" class="suls-text-color">Неделя</label>
+                    <input class="WorkDayInputLabel" asp-for="WorkoutDays[6].WorkDay" readonly name="WorkoutDays[6].WorkDay" value="Неделя" type="text" />
+                </div>
+
+                <div class="form-group clearfix" id="ExerciseContainer6">
+                    <label asp-for="WorkoutDays[6].Exercises" class="suls-text-color"></label>
+                    <a class="btn btn-success" onclick="AddMoreWorkExercise(6)">+</a>
+                </div>
             </div>
 
-            <input asp-for="ClientId" class="form-control hidden" value="@ViewData["ClientId"]">
-            <span asp-validation-for="ClientId" class="hidden text-danger"></span>
+
+            <input asp-for="ClientId" value="@ViewData["ClientId"]" hidden />
 
             @await Html.PartialAsync("_ModelErrors")
 
@@ -27,11 +101,44 @@
 
 @section Scripts {
     <script>
-        var dayIndex = 0;
-        function AddMoreWorkDays() {
-            $("#DaysContainer")
-                .append("<div class='form-control'>Day: <input type='text' name='WorkoutDays[" + dayIndex + "].WorkDay' /> </div>");
-            dayIndex++;
+        var prevsDays = [];
+        var exerciseIndex = 0;
+        function AddMoreWorkExercise(dayIndex) {
+            if (prevsDays[dayIndex] == undefined) {
+                prevsDays[dayIndex] = 0;
+                exerciseIndex = 0;
+            } else {
+                exerciseIndex = prevsDays[dayIndex];
+            }
+            $("#ExerciseContainer" + dayIndex + "")
+                .append("<div class='form-control'>Име: <input type='text' name='WorkoutDays[" + dayIndex + "]" +
+                    ".Exercises[" + exerciseIndex + "].Name' /> </div>" +
+                    "<div class='form-control'> Репетиции или време: <input type='text' name='WorkoutDays[" + dayIndex + "]" +
+                    ".Exercises[" + exerciseIndex + "].RepsOrTime' />"
+                    + " </div>" +
+                    "<div class='form-control'> <label>Мускулна група</label> <select name='WorkoutDays[" + dayIndex + "]" +
+                ".Exercises[" + exerciseIndex + "].MuscleGroup' >" +
+                " <option value='@MuscleGroup.Arms'> " +
+                   "     Ръце  " +
+                " </option> " +
+                    " <option value='@MuscleGroup.Back'> " +
+                   "     Гръб  " +
+                " </option> " +
+                    " <option value='@MuscleGroup.Chest'> " +
+                   "     Гърди  " +
+                " </option> " +
+                    " <option value='@MuscleGroup.Core'> " +
+                   "     Корем  " +
+                " </option> " +
+                    " <option value='@MuscleGroup.Legs'> " +
+                   "     Крака  " +
+                " </option> " +
+                    " <option value='@MuscleGroup.Shoulder'> " +
+                   "     Рамене  " +
+                   " </option> " +
+                " </select> "
+                    + " </div>");
+            prevsDays[dayIndex]++;
         }
     </script>
 }

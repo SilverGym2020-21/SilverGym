@@ -1,0 +1,23 @@
+﻿@using SilverGym.Web.ViewModels.WorkDays;
+
+@model IEnumerable<WorkoutDayInputModel>
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="text-align: center; color: lightgray">Add Exercises</h1>
+            <div class="top-border-line primary-separator"></div>
+
+            <div class="form-group">
+                <label for="WorkDay" class="suls-text-color">Monday</label>
+                <input for="WorkDay" name="WorkDay" value="Monday" type="text" />
+            </div>
+
+            <div class="form-group clearfix" id="ExerciseContainer">
+                <label for="Exercises" class="suls-text-color"></label>
+                <a class="btn btn-success" onclick="AddMoreWorkExercise()">+</a>
+            </div>
+
+            <div class="top-border-line primary-separator"></div>
+    </div>
+</div>
+

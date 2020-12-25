@@ -10,7 +10,6 @@
         [Required]
         public string ClientId { get; set; }
 
-        [Required]
-        public IEnumerable<WorkoutDayInputModel> WorkoutDays { get; set; }
+        public List<WorkoutDayInputModel> WorkoutDays { get; set; }
     }
 }

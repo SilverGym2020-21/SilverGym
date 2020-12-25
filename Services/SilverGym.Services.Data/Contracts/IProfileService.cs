@@ -6,9 +6,12 @@
     using System.Threading.Tasks;
 
     using SilverGym.Web.ViewModels.Profile;
+    using SilverGym.Web.ViewModels.WorkoutPlan;
 
     public interface IProfileService
     {
         public Task<PersonalTrainerViewModel> GetTrainer(string userId);
+
+        public Task<WorkoutPlanViewModel> GetWorkoutPlan(string userId);
     }
 }

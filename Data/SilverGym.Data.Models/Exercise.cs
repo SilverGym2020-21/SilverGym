@@ -22,7 +22,7 @@
 
         public MuscleGroup MuscleGroup { get; set; }
 
-        public int Reps { get; set; }
+        public string RepsOrTime { get; set; }
 
         public virtual WorkoutDay WorkoutDay { get; set; }
 

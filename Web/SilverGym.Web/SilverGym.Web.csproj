@@ -22,7 +22,7 @@
     <Content Remove="Views\Profile\Eating.cshtml" />
     <Content Remove="Views\Profile\Home.cshtml" />
     <Content Remove="Views\Profile\Trainer.cshtml" />
-    <Content Remove="Views\Profile\Training.cshtml" />
+    <Content Remove="Views\Profile\WorkoutPlan.cshtml" />
     <Content Remove="Views\Silvergym\about.cshtml" />
     <Content Remove="Views\Silvergym\blog.cshtml" />
     <Content Remove="Views\Silvergym\contact.cshtml" />
@@ -38,7 +38,7 @@
     <None Include="Views\Gym\Trainers.cshtml" />
     <None Include="Views\Profile\Trainer.cshtml" />
     <None Include="Views\Profile\Eating.cshtml" />
-    <None Include="Views\Profile\Training.cshtml" />
+    <None Include="Views\Profile\WorkoutPlan.cshtml" />
     <None Include="Views\Profile\Home.cshtml" />
     <None Include="Views\Silvergym\blog.cshtml" />
     <None Include="Views\Gym\Gallery.cshtml" />

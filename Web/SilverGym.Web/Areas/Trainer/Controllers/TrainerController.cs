@@ -13,6 +13,7 @@
     using SilverGym.Web.ViewModels;
     using SilverGym.Web.ViewModels.EatingPlan;
     using SilverGym.Web.ViewModels.Trainer;
+    using SilverGym.Web.ViewModels.WorkDays;
     using SilverGym.Web.ViewModels.WorkoutPlan;
 
     [Authorize(Roles = GlobalConstants.TrainerRoleName)]
@@ -119,6 +120,7 @@
         [HttpPost]
         public async Task<IActionResult> AddWorkoutPlan(WorkoutPlanInputModel input)
         {
+            await this.trainersService.AddWorkoutPlantToClient(input);
             return this.Redirect("/");
         }
     }

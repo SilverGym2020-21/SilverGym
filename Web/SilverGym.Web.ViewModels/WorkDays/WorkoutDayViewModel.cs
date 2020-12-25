@@ -5,10 +5,10 @@
     using SilverGym.Data.Models.Enums;
     using SilverGym.Web.ViewModels.Exercises;
 
-    public class WorkoutDayInputModel
+    public class WorkoutDayViewModel
     {
-        public WorkDay WorkDay { get; set; }
+        public string WorkDay { get; set; }
 
-        public List<ExerciseInputModel> Exercises { get; set; }
+        public List<ExerciseViewModel> Exercises { get; set; }
     }
 }

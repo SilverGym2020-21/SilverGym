@@ -35,5 +35,12 @@
             var viewModel = await this.profileService.GetTrainer(userId);
             return this.View(viewModel);
         }
+
+        public async Task<IActionResult> WorkoutPlan()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = await this.profileService.GetWorkoutPlan(userId);
+            return this.View(viewModel);
+        }
     }
 }

@@ -5,6 +5,7 @@
 
     using SilverGym.Web.ViewModels;
     using SilverGym.Web.ViewModels.Trainer;
+    using SilverGym.Web.ViewModels.WorkoutPlan;
 
     public interface ITrainersService
     {
@@ -17,5 +18,7 @@
         public Task<ICollection<TrainerViewModel>> GetTrainers();
 
         public Task<TrainerViewModel> GetTrainer(string id);
+
+        public Task AddWorkoutPlantToClient(WorkoutPlanInputModel input);
     }
 }
