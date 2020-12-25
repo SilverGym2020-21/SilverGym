@@ -1,3 +1,25 @@
 ﻿.trainer-image {
     height: 430px;
 }
+
+.plan-info {
+}
+
+    .plan-info .name-info {
+        color: black;
+    }
+
+    .plan-info .time-info {
+        color: green;
+    }
+
+.meal-info {
+}
+
+    .meal-info .name-info {
+        color: red;
+    }
+
+    .meal-info .quantity-info {
+        color: blue;
+    }
