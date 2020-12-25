@@ -108,7 +108,7 @@
         {
             var a = 1;
 
-            return this.Redirect("/");
+            return this.Redirect("/Trainer/Trainer/ControlPanel");
         }
 
         public IActionResult AddWorkoutPlan(string id)
@@ -121,7 +121,14 @@
         public async Task<IActionResult> AddWorkoutPlan(WorkoutPlanInputModel input)
         {
             await this.trainersService.AddWorkoutPlantToClient(input);
-            return this.Redirect("/");
+            return this.Redirect("/Trainer/Trainer/ControlPanel");
+        }
+
+        public async Task<IActionResult> RemoveWorkoutPlan(string id)
+        {
+            var trainerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.trainersService.RemoveWorkoutPlantFromClient(id, trainerId);
+            return this.Redirect("/Trainer/Trainer/ControlPanel");
         }
     }
 }

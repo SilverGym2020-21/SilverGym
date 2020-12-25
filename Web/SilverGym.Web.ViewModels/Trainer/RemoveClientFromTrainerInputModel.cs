@@ -11,6 +11,14 @@
         [EmailAddress]
         public string ClientEmail { get; set; }
 
+        public bool HasWokroutPlan { get; set; }
+
+        public string WorkoutPlanId { get; set; }
+
+        public bool HasEatingPlan { get; set; }
+
+        public string EatingPlanId { get; set; }
+
         [Required]
         public string TrainerId { get; set; }
     }

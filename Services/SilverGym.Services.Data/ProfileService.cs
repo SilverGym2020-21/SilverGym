@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -58,7 +59,17 @@
                 throw new ArgumentException("Моля влезте си в акаунта!");
             }
 
-            var workoutPlan = await this.db.WorkoutPlans.Include(w => w.WorkoutDays).ThenInclude(d => d.Exercises).FirstOrDefaultAsync(w => w.UserId == user.Id);
+            var workoutPlan = await this.db.WorkoutPlans
+                .Include(w => w.WorkoutDays)
+                .ThenInclude(d => d.Exercises)
+                .FirstOrDefaultAsync(w => w.UserId == user.Id);
+
+            if (workoutPlan == null)
+            {
+                return null;
+            }
+
+            workoutPlan.WorkoutDays = workoutPlan.WorkoutDays.OrderBy(d => d.WorkDay).ToList();
 
             var viewWorkoutDays = new List<WorkoutDayViewModel>();
             foreach (var day in workoutPlan.WorkoutDays)
@@ -76,7 +87,7 @@
 
                 int value = (int)day.WorkDay;
                 var enumDisplayStatus = (WorkDay)value;
-                string stringValue = enumDisplayStatus.ToString();
+                string stringValue = this.TranslateToBg(enumDisplayStatus.ToString());
 
                 viewWorkoutDays.Add(new WorkoutDayViewModel()
                 {
@@ -89,6 +100,29 @@
             {
                 WorkoutDays = viewWorkoutDays,
             };
+        }
+
+        private string TranslateToBg(string day)
+        {
+            switch (day)
+            {
+                case "Monday":
+                    return "Понеделник";
+                case "Tuesday":
+                    return "Вторник";
+                case "Wednesday":
+                    return "Сряда";
+                case "Thursday":
+                    return "Четвъртък";
+                case "Friday":
+                    return "Петък";
+                case "Saturday":
+                    return "Събота";
+                case "Sunday":
+                    return "Неделя";
+                default:
+                    return "Неопределен";
+            }
         }
     }
 }

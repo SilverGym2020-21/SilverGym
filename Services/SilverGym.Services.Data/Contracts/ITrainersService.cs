@@ -20,5 +20,7 @@
         public Task<TrainerViewModel> GetTrainer(string id);
 
         public Task AddWorkoutPlantToClient(WorkoutPlanInputModel input);
+
+        public Task RemoveWorkoutPlantFromClient(string id, string trainerId);
     }
 }

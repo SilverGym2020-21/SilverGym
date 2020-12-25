@@ -9,11 +9,10 @@
         [Required]
         public string Name { get; set; }
 
-        //[Required]
+        [Required]
         public MuscleGroup MuscleGroup { get; set; }
 
-        //[Required]
-        //[MinLength(0)]
+        [Required]
         public string RepsOrTime { get; set; }
     }
 }

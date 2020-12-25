@@ -102,12 +102,14 @@
 
         public async Task<ICollection<RemoveClientFromTrainerInputModel>> GetClients(string trainerId)
         {
-            var trainer = await this.db.Trainers.Include(t => t.Clients).FirstOrDefaultAsync(t => t.Id == trainerId);
+            var trainer = await this.db.Trainers.Include(t => t.Clients).ThenInclude(c => c.WorkoutPlans).FirstOrDefaultAsync(t => t.Id == trainerId);
             return trainer.Clients.Select(c => new RemoveClientFromTrainerInputModel()
             {
                 ClientEmail = c.Email,
                 ClientId = c.Id,
                 TrainerId = trainer.Id,
+                HasWokroutPlan = c.WorkoutPlans.Count > 0,
+                WorkoutPlanId = c.WorkoutPlans.FirstOrDefault()?.WorkoutPlanId,
             }).ToList();
         }
 
@@ -165,6 +167,25 @@
             client.Trainer = null;
             client.TrainerId = null;
 
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task RemoveWorkoutPlantFromClient(string id, string traineriD)
+        {
+            var client = await this.db.Users.FirstOrDefaultAsync(u => u.Id == id && u.TrainerId == traineriD);
+            if (client == null)
+            {
+                throw new ArgumentException("Няма регистриран човек с този е-мейл.");
+            }
+
+            var workoutPlan = await this.db.WorkoutPlans
+                .Include(w => w.WorkoutDays)
+                .ThenInclude(d => d.Exercises)
+                .FirstOrDefaultAsync(w => w.UserId == client.Id);
+
+            client.WorkoutPlans.Remove(workoutPlan);
+
+            this.db.WorkoutPlans.Remove(workoutPlan);
             await this.db.SaveChangesAsync();
         }
     }
