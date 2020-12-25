@@ -7,7 +7,14 @@
     <div>
         <p>@client.ClientEmail</p>
         @await Html.PartialAsync("_RemoveClient", client) 
-        <a asp-area="Trainer" asp-controller="Trainer" asp-action="AddEatingPlan" asp-route-id="@client.ClientId">Добави хранителен режим</a>
+        @if (client.HasEatingPlan)
+        {
+            <a asp-area="Trainer" asp-controller="Trainer" asp-action="RemoveEatingPlan" asp-route-id="@client.ClientId">Изтрий хранителен режим</a>
+        }
+        else
+        {
+            <a asp-area="Trainer" asp-controller="Trainer" asp-action="AddEatingPlan" asp-route-id="@client.ClientId">Добави хранителен режим</a>
+        }
         @if (client.HasWokroutPlan)
         {
             <a asp-area="Trainer" asp-controller="Trainer" asp-action="RemoveWorkoutPlan" asp-route-id="@client.ClientId">Изтрий тренировачна програма</a>

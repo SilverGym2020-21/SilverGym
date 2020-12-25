@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using SilverGym.Web.ViewModels;
+    using SilverGym.Web.ViewModels.EatingPlan;
     using SilverGym.Web.ViewModels.Trainer;
     using SilverGym.Web.ViewModels.WorkoutPlan;
 
@@ -22,5 +23,9 @@
         public Task AddWorkoutPlantToClient(WorkoutPlanInputModel input);
 
         public Task RemoveWorkoutPlantFromClient(string id, string trainerId);
+
+        public Task AddEatingPlantToClient(EatingPlanInputModel input);
+
+        public Task RemoveEatingPlantFromClient(string id, string trainerId);
     }
 }

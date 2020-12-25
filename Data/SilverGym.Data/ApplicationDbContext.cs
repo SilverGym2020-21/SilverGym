@@ -32,8 +32,6 @@
 
         public DbSet<MealPlan> MealPlan { get; set; }
 
-        public DbSet<MealPlans> MealPlans { get; set; }
-
         public DbSet<EatingPlan> EatingPlan { get; set; }
 
         public DbSet<Exercise> Exercises { get; set; }
@@ -91,8 +89,6 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            builder.Entity<MealPlans>().HasKey(x => new { x.MealId, x.MealPlanId});
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

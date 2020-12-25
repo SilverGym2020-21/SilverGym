@@ -1,0 +1,43 @@
+﻿@using SilverGym.Web.ViewModels.EatingPlan
+@using SilverGym.Web.ViewModels.MealPlan
+@using SilverGym.Web.ViewModels.Meals
+
+@model EatingPlanViewModel
+
+<body>
+
+    <div class="fh5co-loader"></div>
+    @if (Model == null)
+    {
+        <h1>Нямаш хранителен режим</h1>
+    }
+    else
+    {
+        <h1>
+            Хранителен режим
+        </h1>
+        <div class="container">
+            @foreach (MealPlanViewModel plan in Model.MealPlans)
+            {
+                <div class="plan-info">
+                    <span class="name-info">@plan.Name</span>
+                    <span class="time-info">@plan.Time</span>
+                </div>
+                @foreach (MealViewModel meal in plan.Meals)
+                {
+                    <div class="meal-info">
+                        <span class="name-info">@meal.Name</span>
+                        <span class="quantity-info">@meal.GramsOrMil</span>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    </div>
+
+</body>
+

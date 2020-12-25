@@ -10,6 +10,7 @@
     using SilverGym.Data.Models;
     using SilverGym.Services.Data.Contracts;
     using SilverGym.Web.ViewModels;
+    using SilverGym.Web.ViewModels.EatingPlan;
     using SilverGym.Web.ViewModels.Trainer;
     using SilverGym.Web.ViewModels.WorkoutPlan;
 
@@ -50,6 +51,53 @@
             client.Trainer = trainer;
             client.TrainerId = trainer.Id;
 
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task AddEatingPlantToClient(EatingPlanInputModel input)
+        {
+            var client = await this.db.Users.FirstOrDefaultAsync(u => u.Id == input.ClientId);
+
+            if (client == null)
+            {
+                throw new ArgumentException("Невалиден клиент.");
+            }
+
+            var eatingPlan = new EatingPlan()
+            {
+                User = client,
+                UserId = client.Id,
+            };
+            var mealPlans = new List<MealPlan>();
+
+            foreach (var plan in input.MealPlans.Where(d => d.Meals != null).ToList())
+            {
+                var mealPlan = new MealPlan()
+                {
+                    Name = plan.Name,
+                    Time = plan.Time,
+                    EatingPlan = eatingPlan,
+                    EatingPlanId = eatingPlan.EatingPlanId,
+                };
+
+                foreach (var inputMeal in plan.Meals)
+                {
+                    var meal = new Meal()
+                    {
+                        Name = inputMeal.Name,
+                        GramsOrMil = inputMeal.GramsOrMil,
+                        MealPlan = mealPlan,
+                        MealPlanId = mealPlan.MealPlanId,
+                    };
+                    mealPlan.Meals.Add(meal);
+                }
+
+                mealPlans.Add(mealPlan);
+            }
+
+            eatingPlan.MealPlans = mealPlans;
+
+            await this.db.EatingPlan.AddAsync(eatingPlan);
             await this.db.SaveChangesAsync();
         }
 
@@ -102,7 +150,12 @@
 
         public async Task<ICollection<RemoveClientFromTrainerInputModel>> GetClients(string trainerId)
         {
-            var trainer = await this.db.Trainers.Include(t => t.Clients).ThenInclude(c => c.WorkoutPlans).FirstOrDefaultAsync(t => t.Id == trainerId);
+            var trainer = await this.db.Trainers
+                .Include(t => t.Clients)
+                .ThenInclude(c => c.WorkoutPlans)
+                .Include(t => t.Clients)
+                .ThenInclude(e => e.EatingPlans)
+                .FirstOrDefaultAsync(t => t.Id == trainerId);
             return trainer.Clients.Select(c => new RemoveClientFromTrainerInputModel()
             {
                 ClientEmail = c.Email,
@@ -110,6 +163,8 @@
                 TrainerId = trainer.Id,
                 HasWokroutPlan = c.WorkoutPlans.Count > 0,
                 WorkoutPlanId = c.WorkoutPlans.FirstOrDefault()?.WorkoutPlanId,
+                HasEatingPlan = c.EatingPlans.Count > 0,
+                EatingPlanId = c.EatingPlans.FirstOrDefault()?.EatingPlanId,
             }).ToList();
         }
 
@@ -170,6 +225,33 @@
             await this.db.SaveChangesAsync();
         }
 
+        public async Task RemoveEatingPlantFromClient(string id, string trainerId)
+        {
+            var client = await this.db.Users.FirstOrDefaultAsync(u => u.Id == id && u.TrainerId == trainerId);
+            if (client == null)
+            {
+                throw new ArgumentException("Няма регистриран човек с този е-мейл.");
+            }
+
+            var eatingPlan = await this.db.EatingPlan
+                .Include(e => e.MealPlans)
+                .ThenInclude(m => m.Meals)
+                .FirstOrDefaultAsync(w => w.UserId == client.Id);
+
+            client.EatingPlans.Remove(eatingPlan);
+
+            this.db.EatingPlan.Remove(eatingPlan);
+            await this.db.SaveChangesAsync();
+
+            this.db.MealPlan.RemoveRange(eatingPlan.MealPlans);
+            foreach (var plan in eatingPlan.MealPlans)
+            {
+                this.db.Meals.RemoveRange(plan.Meals);
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task RemoveWorkoutPlantFromClient(string id, string traineriD)
         {
             var client = await this.db.Users.FirstOrDefaultAsync(u => u.Id == id && u.TrainerId == traineriD);
@@ -186,6 +268,14 @@
             client.WorkoutPlans.Remove(workoutPlan);
 
             this.db.WorkoutPlans.Remove(workoutPlan);
+            await this.db.SaveChangesAsync();
+
+            this.db.WorkoutDays.RemoveRange(workoutPlan.WorkoutDays);
+            foreach (var day in workoutPlan.WorkoutDays)
+            {
+                this.db.Exercises.RemoveRange(day.Exercises);
+            }
+
             await this.db.SaveChangesAsync();
         }
     }

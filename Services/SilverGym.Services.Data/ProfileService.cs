@@ -9,7 +9,10 @@
     using SilverGym.Data;
     using SilverGym.Data.Models.Enums;
     using SilverGym.Services.Data.Contracts;
+    using SilverGym.Web.ViewModels.EatingPlan;
     using SilverGym.Web.ViewModels.Exercises;
+    using SilverGym.Web.ViewModels.MealPlan;
+    using SilverGym.Web.ViewModels.Meals;
     using SilverGym.Web.ViewModels.Profile;
     using SilverGym.Web.ViewModels.WorkDays;
     using SilverGym.Web.ViewModels.WorkoutPlan;
@@ -21,6 +24,54 @@
         public ProfileService(ApplicationDbContext db)
         {
             this.db = db;
+        }
+
+        public async Task<EatingPlanViewModel> GetEatingPlan(string userId)
+        {
+            var user = await this.db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("Моля влезте си в акаунта!");
+            }
+
+            var eatingPlan = await this.db.EatingPlan
+                .Include(e => e.MealPlans)
+                .ThenInclude(m => m.Meals)
+                .FirstOrDefaultAsync(e => e.UserId == user.Id);
+
+            if (eatingPlan == null)
+            {
+                return null;
+            }
+
+            var mealPlanModel = new List<MealPlanViewModel>();
+            foreach (var mealPlan in eatingPlan.MealPlans)
+            {
+                var mealsModel = new List<MealViewModel>();
+                var plan = new MealPlanViewModel()
+                {
+                    Name = mealPlan.Name,
+                    Time = mealPlan.Time,
+                };
+                foreach (var meal in mealPlan.Meals)
+                {
+                    var model = new MealViewModel()
+                    {
+                        Name = meal.Name,
+                        GramsOrMil = meal.GramsOrMil,
+                    };
+                    mealsModel.Add(model);
+                }
+
+                plan.Meals = mealsModel;
+                mealPlanModel.Add(plan);
+            }
+
+            return new EatingPlanViewModel()
+            {
+                MealPlans = mealPlanModel,
+            };
         }
 
         public async Task<PersonalTrainerViewModel> GetTrainer(string userId)

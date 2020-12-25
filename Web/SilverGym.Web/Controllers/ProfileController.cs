@@ -24,9 +24,11 @@
             return this.View();
         }
 
-        public IActionResult Eating()
+        public async Task<IActionResult> EatingPlan()
         {
-            return this.View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var viewModel = await this.profileService.GetEatingPlan(userId);
+            return this.View(viewModel);
         }
 
         public async Task<IActionResult> Trainer()

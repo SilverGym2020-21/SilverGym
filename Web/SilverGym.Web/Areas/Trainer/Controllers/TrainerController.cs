@@ -106,9 +106,15 @@
         [HttpPost]
         public async Task<IActionResult> AddEatingPlan(EatingPlanInputModel input)
         {
-            var a = 1;
+            await this.trainersService.AddEatingPlantToClient(input);
+            return this.Redirect("/Trainer/Trainer/Clients");
+        }
 
-            return this.Redirect("/Trainer/Trainer/ControlPanel");
+        public async Task<IActionResult> RemoveEatingPlan(string id)
+        {
+            var trainerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.trainersService.RemoveEatingPlantFromClient(id, trainerId);
+            return this.Redirect("/Trainer/Trainer/Clients");
         }
 
         public IActionResult AddWorkoutPlan(string id)
@@ -121,14 +127,14 @@
         public async Task<IActionResult> AddWorkoutPlan(WorkoutPlanInputModel input)
         {
             await this.trainersService.AddWorkoutPlantToClient(input);
-            return this.Redirect("/Trainer/Trainer/ControlPanel");
+            return this.Redirect("/Trainer/Trainer/Clients");
         }
 
         public async Task<IActionResult> RemoveWorkoutPlan(string id)
         {
             var trainerId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.trainersService.RemoveWorkoutPlantFromClient(id, trainerId);
-            return this.Redirect("/Trainer/Trainer/ControlPanel");
+            return this.Redirect("/Trainer/Trainer/Clients");
         }
     }
 }

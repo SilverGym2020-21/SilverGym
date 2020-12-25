@@ -10,7 +10,7 @@
         public MealPlan()
         {
             this.MealPlanId = Guid.NewGuid().ToString();
-            this.Meals = new HashSet<MealPlans>();
+            this.Meals = new HashSet<Meal>();
         }
 
         public string MealPlanId { get; set; }
@@ -19,7 +19,7 @@
 
         public string Time { get; set; }
 
-        public virtual ICollection<MealPlans> Meals { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; }
 
         public virtual EatingPlan EatingPlan { get; set; }
 
