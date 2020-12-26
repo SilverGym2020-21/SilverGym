@@ -45,6 +45,8 @@
                 return null;
             }
 
+            eatingPlan.MealPlans = eatingPlan.MealPlans.OrderBy(mp => mp.Name).ToList();
+
             var mealPlanModel = new List<MealPlanViewModel>();
             foreach (var mealPlan in eatingPlan.MealPlans)
             {
