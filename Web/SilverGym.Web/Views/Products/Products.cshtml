@@ -1,0 +1,19 @@
+﻿@using SilverGym.Web.ViewModels.Products
+
+@model ICollection<ProductViewModel>
+
+<div class="product-container">
+    @foreach (ProductViewModel product in Model)
+    {
+        <div class="product">
+            <div class="image-container">
+                <img class="product-image" src="~/productImages/@product.MainImagePath" alt="Няма снимка" />
+            </div>
+            <div class="product-name">@product.Name</div>
+            <div class="product-price">@product.Price лв.</div>
+            <div>
+                <a class="text-uppercase" href="/Products/ProductDetails?id=@product.ProductId">Повече информация</a>
+            </div>
+        </div>
+    }
+</div>

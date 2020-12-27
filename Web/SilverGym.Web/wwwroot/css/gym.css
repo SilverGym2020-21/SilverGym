@@ -23,3 +23,57 @@
     .meal-info .quantity-info {
         color: blue;
     }
+
+
+
+.product-container {
+
+}
+
+    .product-container .product {
+
+    }
+
+        .product-container .product .product-image {
+
+        }
+
+        .product-container .product .product-name {
+
+        }
+
+        .product-container .product .image-container {
+
+        }
+
+            .product-container .product .image-container .product-image {
+                width: 560px;
+                height: 560px;
+            }
+
+    .product-container .product-details {
+
+    }
+
+        .product-container .product .product-image {
+
+        }
+
+        .product-container .product .product-name {
+
+        }
+
+        .product-container .product .product-description {
+
+        }
+
+        .product-container .product .image-container {
+
+        }
+
+            .product-container .product .image-container .product-image {
+                width: 560px;
+                height: 560px;
+            }
+
+        

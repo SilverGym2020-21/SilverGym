@@ -1,0 +1,14 @@
+﻿@using SilverGym.Web.ViewModels.Products
+
+@model ProductDetailsViewModel
+
+<div class="product-container">
+    <div class="product-details">
+        <div class="image-container">
+            <img class="product-image" src="~/productImages/@Model.MainImagePath" alt="Няма снимка" />
+        </div>
+        <div class="product-name">@Model.Name</div>
+        <div class="product-price">@Model.Price лв.</div>
+        <div class="product-description">@Model.Description</div>
+    </div>
+</div>
