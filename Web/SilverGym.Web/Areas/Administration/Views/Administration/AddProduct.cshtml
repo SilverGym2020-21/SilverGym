@@ -1,0 +1,42 @@
+﻿@using SilverGym.Web.ViewModels.Products;
+
+@model ProductInputModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 style="text-align: center; color: lightgray">Добави нов продукт</h1>
+        <form class="mx-auto half-width col-5" enctype="multipart/form-data" method="post" asp-action="AddProduct">
+            <div class="top-border-line primary-separator"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="suls-text-color">Име на продукта</label>
+                <input asp-for="Name" class="form-control" placeholder="Име...">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="suls-text-color">Цена</label>
+                <input asp-for="Price" class="form-control" placeholder="Цена...">
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="suls-text-color">Описание</label>
+                <textarea asp-for="Description" class="form-control" cols="30" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MainImage" class="suls-text-color">Снимка на продукта</label>
+                <input asp-for="MainImage" class="form-control">
+                <span asp-validation-for="MainImage" class="text-danger"></span>
+            </div>
+
+            <div class="top-border-line primary-separator"></div>
+
+            @await Html.PartialAsync("_ModelErrors")
+
+            <button type="submit" class="btn forum-add-bg-color">Добави продукт</button>
+        </form>
+    </div>
+</div>

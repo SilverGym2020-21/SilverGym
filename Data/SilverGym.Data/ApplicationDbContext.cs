@@ -11,6 +11,7 @@
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using SilverGym.Data.Models.Shopping;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -39,6 +40,12 @@
         public DbSet<WorkoutDay> WorkoutDays { get; set; }
 
         public DbSet<WorkoutPlan> WorkoutPlans { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<CartProduct> CartProducts { get; set; }
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
 
         public override int SaveChanges() => this.SaveChanges(true);

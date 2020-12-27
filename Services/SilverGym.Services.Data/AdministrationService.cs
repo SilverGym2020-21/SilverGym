@@ -7,13 +7,16 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using SilverGym.Common;
     using SilverGym.Data;
     using SilverGym.Data.Models;
+    using SilverGym.Data.Models.Shopping;
     using SilverGym.Services.Data.Contracts;
     using SilverGym.Web.ViewModels.Administration;
+    using SilverGym.Web.ViewModels.Products;
 
     public class AdministrationService : IAdministrationService
     {
@@ -24,6 +27,36 @@
         {
             this.db = db;
             this.hostingEnvironment = hostingEnvironment;
+        }
+
+        public async Task AddProduct(ProductInputModel input)
+        {
+            var imagePath = this.UploadImage(input.MainImage, "productImages");
+
+            var product = new Product()
+            {
+                Name = input.Name,
+                Price = input.Price,
+                Description = input.Description,
+                MainImage = imagePath,
+            };
+
+            await this.db.Products.AddAsync(product);
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task RemoveProduct(ProductRemoveInputModel input)
+        {
+            var product = await this.db.Products.FirstOrDefaultAsync(p => p.ProductId == input.ProductId);
+            if (product == null)
+            {
+                throw new ArgumentException("Няма такъв продукт!");
+            }
+
+            // check if in any shopping carts and remove it from there.
+
+            this.db.Products.Remove(product);
+            await this.db.SaveChangesAsync();
         }
 
         public async Task AddTrainer(TrainerInputModel input)
@@ -50,7 +83,7 @@
             await this.db.SaveChangesAsync();
             this.db.Users.Remove(user);
 
-            string fileName = this.UploadFile(input);
+            string fileName = this.UploadImage(input.ProfileImage, "trainerImages");
 
             var trainer = new Trainer()
             {
@@ -150,17 +183,17 @@
             await this.db.SaveChangesAsync();
         }
 
-        private string UploadFile(TrainerInputModel input)
+        private string UploadImage(IFormFile image, string folderName)
         {
             string fileName = null;
-            if (input.ProfileImage != null)
+            if (image != null)
             {
-                string uploadDir = Path.Combine(this.hostingEnvironment.WebRootPath, "trainerImages");
-                fileName = Guid.NewGuid().ToString() + "-" + input.ProfileImage.FileName;
+                string uploadDir = Path.Combine(this.hostingEnvironment.WebRootPath, folderName);
+                fileName = Guid.NewGuid().ToString() + "-" + image.FileName;
                 string filePath = Path.Combine(uploadDir, fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    input.ProfileImage.CopyTo(fileStream);
+                    image.CopyTo(fileStream);
                 }
             }
 
