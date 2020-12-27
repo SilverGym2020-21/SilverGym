@@ -1,0 +1,29 @@
+﻿@using SilverGym.Web.ViewModels.Products
+
+@model ICollection<ProductCartViewModel>
+
+<div class="product-container">
+    @foreach (var modelState in ViewData.ModelState.Values)
+    {
+        foreach (var error in modelState.Errors)
+        {
+            <p class="error-message">@error.ErrorMessage</p>
+        }
+    }
+
+    @foreach (ProductCartViewModel product in Model)
+    {
+        <div class="product">
+            <div class="image-container">
+                <img class="product-image" src="~/productImages/@product.MainImage" alt="Няма снимка" />
+            </div>
+            <div class="product-name">@product.Name</div>
+            <div class="product-price">@($"{product.TotalPrice:F2}") лв.</div>
+            <div>
+                <a class="text-uppercase" href="/Products/IncreaseCount?id=@product.ProductId">+</a>
+                <div>@product.Count</div>
+                <a class="text-uppercase" href="/Products/DecreaseCount?id=@product.ProductId">-</a>
+            </div>
+        </div>
+    }
+</div>

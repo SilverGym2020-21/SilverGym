@@ -10,9 +10,10 @@
                 <img class="product-image" src="~/productImages/@product.MainImagePath" alt="Няма снимка" />
             </div>
             <div class="product-name">@product.Name</div>
-            <div class="product-price">@product.Price лв.</div>
+            <div class="product-price">@($"{product.Price:F2}") лв.</div>
             <div>
                 <a class="text-uppercase" href="/Products/ProductDetails?id=@product.ProductId">Повече информация</a>
+                <a class="text-uppercase" href="/Products/AddToCart?id=@product.ProductId">Добави в количка</a>
             </div>
         </div>
     }

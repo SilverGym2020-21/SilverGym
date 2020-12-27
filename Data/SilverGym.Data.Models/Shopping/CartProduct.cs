@@ -4,7 +4,7 @@
     {
         public int Count { get; set; }
 
-        public double TotalPrice { get => this.Price * this.Count; set => this.TotalPrice = value; }
+        public double TotalPrice { get; set; }
 
         public virtual string ShoppingCartId { get; set; }
 
