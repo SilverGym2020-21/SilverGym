@@ -7,7 +7,7 @@
 <body>
 
     <div class="fh5co-loader"></div>
-    <div id="fh5co-schedule" class="fh5co-bg" style="background-image: url(/images/img_bg_1.jpg);">
+    <div id="fh5co-schedule" class="fh5co-bg" style="background-image: url(/images/img_bg_1.jpg); margin-bottom : 50px">
         <div class="container">
             @if (Model == null)
             {
@@ -37,6 +37,7 @@
                                 }
                             }
                         </ul>
+                        
                         <div class="fh5co-tab-content-wrap">
 
                             @for (int i = 1; i <= Model.WorkoutDays.Count; i++)
@@ -78,12 +79,16 @@
             }
 
         </div>
+  
     </div>
 
+ 
 
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
+
+
 
 </body>
 
