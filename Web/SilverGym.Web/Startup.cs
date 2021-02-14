@@ -22,6 +22,8 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SilverGym.Services.Data.Contracts;
+    using Stripe;
+    using SilverGym.Web.Data;
 
     public class Startup
     {
@@ -69,11 +71,14 @@
             services.AddTransient<ITrainersService, TrainersService>();
             services.AddTransient<IProfileService, ProfileService>();
             services.AddTransient<IProductsService, ProductsService>();
+            services.Configure<StripeSettings>(this.configuration.GetSection("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.SetApiKey(this.configuration.GetSection("Stripe")["SecretKey"]);
+
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
