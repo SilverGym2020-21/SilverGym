@@ -34,8 +34,11 @@
                                 <li class="active"><a href="/">Начало</a></li>
                                 @if (this.User.Identity.IsAuthenticated == false)
                                 {
+                                    <li><a asp-area="" asp-controller="Gym" asp-action="Gallery">Галерия</a></li>
+                                    <li><a asp-area="" asp-controller="Gym" asp-action="Trainers">Треньори</a></li>
+                                    <li><a asp-area="" asp-controller="Products" asp-action="Products">Продукти</a></li>
+                                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Контакти</a></li>
                                     <li><a asp-area="Identity" asp-page="/Account/Login">Влез</a></li>
-                                    <li><a asp-area="Identity" asp-page="/Account/Register">Регистрирай се</a></li>
                                 }
                                 else
                                 {
